@@ -106,17 +106,8 @@
                                 </ul>
                             </div>
                         </li>
-                    @endif
-                   
-
+                    @endif  
                   
-                    @if(Sentinel::getUser()->hasAccess(['polls_read']) || Sentinel::getUser()->hasAccess(['polls_write']) || Sentinel::getUser()->hasAccess(['polls_delete']))
-                        <li class="nav-item">
-                            <a class="nav-link @yield('poll')" href="{{route('polls')}}">
-                                <i class="mdi mdi-poll"></i>{{__('polls')}}
-                            </a>
-                        </li>
-                    @endif
                     @if(Sentinel::getUser()->hasAccess(['ads_read']) || Sentinel::getUser()->hasAccess(['ads_write']) || Sentinel::getUser()->hasAccess(['ads_delete']))
                         <li class="nav-item">
                             <a class="nav-link @yield('ads')" href="{{ route('ads') }}">
