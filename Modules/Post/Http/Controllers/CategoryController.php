@@ -16,7 +16,7 @@ class CategoryController extends Controller
 {
     public function categories()
     {
-        $categories       = Category::with('childrenRecursive')->orderBy('category_name', 'ASC')->where('parent_id',NULL)->paginate(10);
+        $categories       = Category::with('childrenRecursive')->orderBy('category_name', 'ASC')->where('parent_id',0)->paginate(10);
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $category=new Category();
 

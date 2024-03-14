@@ -29,7 +29,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $categories     = Category::with('childrenRecursive')->where('parent_id', NULL)->get();
+        $categories     = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+      
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $posts          = Post::orderBy('id','desc')->with('image','video','categories','user')->paginate('15');
 
