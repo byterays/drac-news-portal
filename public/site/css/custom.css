@@ -501,7 +501,7 @@ select#languges-changer {
 }
 
 .sg-ad {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .sg-dark .input-group-text {
@@ -1227,9 +1227,6 @@ label.btn.btn-primary {
 
 /* custome css */
 
-.sg-menu .navbar-nav li a {
-    padding: 15px 10px;
-}
 
 .header-bottom {
     padding: 0;
@@ -1255,7 +1252,7 @@ label.btn.btn-primary {
 
 .sg-post {
    
-    margin: 2px;
+    margin-bottom: 2px;
 }
 
 .sg-post.post-style-1 {
@@ -1300,9 +1297,11 @@ label.btn.btn-primary {
     margin-bottom: 0;   
 }
 
+.sg-ad {
+    margin-bottom: 0px;
+}
+
 
 .footer{
     margin-top:15px;
 }
-
-

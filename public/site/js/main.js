@@ -61,11 +61,11 @@ jQuery(function ($) {
 
     $(".news-ticker").slick({
         infinite: true,
-        dots: true,
+        dots: false,
         arrows: true,
         slidesToShow: 1,
         autoplay:true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 10000,
         fade:true,
         pauseOnHover:true,
         slidesToScroll: 1,
@@ -129,7 +129,7 @@ jQuery(function ($) {
         infinite: true,
         dots: false,
         arrows: true,
-        slidesToShow: 4,
+        slidesToShow: 3,
         autoplay:true,
         slidesToScroll: 1,
         swipe: false,

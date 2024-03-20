@@ -160,7 +160,6 @@ CREATE TABLE `audio_post` (
 
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `parent_id` bigint(20) NULL,
   `category_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `language` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -172,14 +171,25 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 --
 -- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`id`, `category_name`, `language`, `slug`, `is_featured`, `meta_description`, `meta_keywords`, `order`, `created_at`, `updated_at`) VALUES
-(1, 'Default', 'en', 'default', 1, '', '', 1, '2021-09-04 22:34:39', '2021-12-06 17:24:25');
+(1, 'World', 'en', 'world', 1, '', '', 1, '2021-09-04 22:34:39', '2021-12-06 17:24:25'),
+(2, 'Science', 'en', 'science', 1, '', '', 1, '2021-09-04 22:34:39', '2021-12-06 17:24:41'),
+(3, 'Life Style', 'en', 'life-style', 1, '', '', 1, '2021-09-04 22:34:39', '2021-12-06 17:24:55'),
+(4, 'RSS News', 'en', 'rss-news', 0, NULL, NULL, 4, '2021-09-04 22:34:39', '2021-09-04 22:34:39');
 
 -- --------------------------------------------------------
+
+
+CREATE TABLE `category_post` (
+  `category_id` bigint NOT NULL,
+  `post_id` bigint NOT NULL
+)
 
 --
 -- Table structure for table `comments`
@@ -252,11 +262,7 @@ INSERT INTO `email_templates` (`id`, `email_group`, `subject`, `template_body`, 
 (1, 'registration', 'Registration successful', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Account</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">Thanks for joining {SITE_NAME}. We listed your sign in details below, make sure you keep them safe.<br /> To open your {SITE_NAME} homepage, please follow this link:<br /> <a style=\"color: #11a7db; text-decoration: none;\" href=\"{SITE_URL}\"><strong>{SITE_NAME} Account</strong></a><br /><br /> Link doesn\'t work? Copy the following link to your browser address bar:<br /><br />{SITE_URL}<br /><br /> Your username: {USERNAME}<br /> Your email address: {USER_EMAIL}<br /><br /><br />{SIGNATURE}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\">&nbsp;</td></tr></tbody></table></td></tr></tbody></table>', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (2, 'forgot_password', 'Forgot Password', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Password</h4><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">Forgot your password, huh? No big deal.<br />To create a new password, just follow this link:<br /> <a style=\"color: #11a7db; text-decoration: none;\" href=\"{PASS_KEY_URL}\"><strong>Create new password</strong></a><br /><br /> Link doesn\'t work? Copy the following link to your browser address bar:<br /> {PASS_KEY_URL}<br /><br /> You received this email, because it was requested by a {SITE_NAME} user.This is part of the procedure to create a new password on the system. If you DID NOT request a new password then please ignore this email and your password will remain the same.<br /><br />Thank you,<br /><br /> Best Regards,<br /> {SITE_NAME}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\"><span style=\"font-size: 10px; color: #999999; font-family: Helvetica,Arial,sans-serif;\">{SIGNATURE}</span></td></tr></tbody></table></td></tr></tbody></table>', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (3, 'activate_account', 'Activate Account', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>Activate Account</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">Thanks for joining {SITE_NAME}. We listed your sign in details below, make sure you keep them safe. To verify your email address, please follow this link:<br /> <a style=\"color: #11a7db; text-decoration: none;\" href=\"{ACTIVATE_URL}\"><strong>Complete Registration</strong></a><br /><br /> Link doesn\'t work? Copy the following link to your browser address bar:<br /> {ACTIVATE_URL}<br /><br /> Your username: {USERNAME}<br /> Your email address: {USER_EMAIL}<br /> Your password: {PASSWORD}<br /><br /><br /> {SIGNATURE}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\">&nbsp;</td></tr></tbody></table></td></tr></tbody></table><p>&nbsp;</p>', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(4, 'reset_password', 'Reset Password', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Password</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">You have changed your password.<br />Please, keep it in your records so you don\'t forget it:<br />Your username: {USERNAME}<br />Your email address: {USER_EMAIL}<br />Your new password: {NEW_PASSWORD}<br /><br /><br /> Best Regards,<br /> {SITE_NAME}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\"><span style=\"font-size: 10px; color: #999999; font-family: Helvetica,Arial,sans-serif;\">{SIGNATURE}</span></td></tr></tbody></table></td></tr></tbody></table>', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(5, 'registration', 'Registration successful', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Account</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">Thanks for joining {SITE_NAME}. We listed your sign in details below, make sure you keep them safe.<br /> To open your {SITE_NAME} homepage, please follow this link:<br /> <a style=\"color: #11a7db; text-decoration: none;\" href=\"{SITE_URL}\"><strong>{SITE_NAME} Account</strong></a><br /><br /> Link doesn\'t work? Copy the following link to your browser address bar:<br /><br />{SITE_URL}<br /><br /> Your username: {USERNAME}<br /> Your email address: {USER_EMAIL}<br /><br /><br />{SIGNATURE}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\">&nbsp;</td></tr></tbody></table></td></tr></tbody></table>', 'ar', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(6, 'activate_account', 'Activate Account', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Password</h4><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">Forgot your password, huh? No big deal.<br />To create a new password, just follow this link:<br /> <a style=\"color: #11a7db; text-decoration: none;\" href=\"{PASS_KEY_URL}\"><strong>Create new password</strong></a><br /><br /> Link doesn\'t work? Copy the following link to your browser address bar:<br /> {PASS_KEY_URL}<br /><br /> You received this email, because it was requested by a {SITE_NAME} user.This is part of the procedure to create a new password on the system. If you DID NOT request a new password then please ignore this email and your password will remain the same.<br /><br />Thank you,<br /><br /> Best Regards,<br /> {SITE_NAME}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\"><span style=\"font-size: 10px; color: #999999; font-family: Helvetica,Arial,sans-serif;\">{SIGNATURE}</span></td></tr></tbody></table></td></tr></tbody></table>', 'ar', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(7, 'reset_password', 'Reset Password', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>Activate Account</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">Thanks for joining {SITE_NAME}. We listed your sign in details below, make sure you keep them safe. To verify your email address, please follow this link:<br /> <a style=\"color: #11a7db; text-decoration: none;\" href=\"{ACTIVATE_URL}\"><strong>Complete Registration</strong></a><br /><br /> Link doesn\'t work? Copy the following link to your browser address bar:<br /> {ACTIVATE_URL}<br /><br /> Your username: {USERNAME}<br /> Your email address: {USER_EMAIL}<br /> Your password: {PASSWORD}<br /><br /><br /> {SIGNATURE}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\">&nbsp;</td></tr></tbody></table></td></tr></tbody></table><p>&nbsp;</p>', 'ar', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(8, 'forgot_password', 'Forgot Password', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Password</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">You have changed your password.<br />Please, keep it in your records so you don\'t forget it:<br />Your username: {USERNAME}<br />Your email address: {USER_EMAIL}<br />Your new password: {NEW_PASSWORD}<br /><br /><br /> Best Regards,<br /> {SITE_NAME}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\"><span style=\"font-size: 10px; color: #999999; font-family: Helvetica,Arial,sans-serif;\">{SIGNATURE}</span></td></tr></tbody></table></td></tr></tbody></table>', 'ar', '2021-09-04 22:34:39', '2021-09-04 22:34:39');
+(4, 'reset_password', 'Reset Password', '<table id=\"backgroundTable\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td valign=\"top\"><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tbody><tr><td width=\"600\" height=\"50\">&nbsp;</td></tr><tr><td style=\"color: #999999;\" width=\"600\" height=\"90\">{SITE_LOGO}</td></tr><tr><td style=\"background: whitesmoke; border: 1px solid #e0e0e0; font-family: Helvetica,Arial,sans-serif;\" valign=\"top\" bgcolor=\"whitesmoke\" width=\"600\" height=\"200\"><table style=\"margin-left: 15px;\" align=\"center\"><tbody><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr><tr><td width=\"560\"><h4>New Password</h4><p style=\"font-size: 12px; font-family: Helvetica,Arial,sans-serif;\">Hi {USERNAME},</p><p style=\"font-size: 12px; line-height: 20px; font-family: Helvetica,Arial,sans-serif;\">You have changed your password.<br />Please, keep it in your records so you don\'t forget it:<br />Your username: {USERNAME}<br />Your email address: {USER_EMAIL}<br />Your new password: {NEW_PASSWORD}<br /><br /><br /> Best Regards,<br /> {SITE_NAME}</p></td></tr><tr><td width=\"560\" height=\"10\">&nbsp;</td></tr></tbody></table></td></tr><tr><td width=\"600\" height=\"10\">&nbsp;</td></tr><tr><td align=\"right\"><span style=\"font-size: 10px; color: #999999; font-family: Helvetica,Arial,sans-serif;\">{SIGNATURE}</span></td></tr></tbody></table></td></tr></tbody></table>', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39');
 
 -- --------------------------------------------------------
 
@@ -1010,9 +1016,14 @@ INSERT INTO `ltm_translations` (`id`, `status`, `locale`, `group`, `key`, `value
 (339, 1, 'en', '_json', 'category_block_style', 'Category block style', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (340, 1, 'en', '_json', 'add_category', 'Add Category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (341, 1, 'en', '_json', 'update_category', 'Update Category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
+(342, 1, 'en', '_json', 'add_sub_category', 'Add sub category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (343, 1, 'en', '_json', 'parent_category', 'Parent category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
+(344, 1, 'en', '_json', 'sub_category_name', 'Sub category name', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
+(345, 1, 'en', '_json', 'update_sub_category', 'Update sub category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (346, 1, 'en', '_json', 'categories', 'Categories', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
+(347, 1, 'en', '_json', 'sub_categories', 'Sub Categories', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (348, 1, 'en', '_json', 'select_category', 'Select Category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
+(349, 1, 'en', '_json', 'select_sub_category', 'Select Sub Category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (350, 1, 'en', '_json', 'add_post', 'Add post', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (351, 1, 'en', '_json', 'posts_details', 'Posts details', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (352, 1, 'en', '_json', 'content', 'Content', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
@@ -1023,7 +1034,7 @@ INSERT INTO `ltm_translations` (`id`, `status`, `locale`, `group`, `key`, `value
 (357, 1, 'en', '_json', 'show_only_to_authenticate_users', 'Show only to authenticated users', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (358, 1, 'en', '_json', 'seo_details', 'SEO Details', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (359, 1, 'en', '_json', 'tags', 'Tags', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
-
+(360, 1, 'en', '_json', 'sub_category', 'Sub Category', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (361, 1, 'en', '_json', 'send_post_to_newsletter', 'Send post to newsletter', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (362, 1, 'en', '_json', 'send_notification_subscribers', 'Send notification to subscribers', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
 (363, 1, 'en', '_json', 'publish', 'Publish', '2022-10-22 18:29:27', '2022-10-22 18:29:27'),
@@ -1773,9 +1784,14 @@ INSERT INTO `ltm_translations` (`id`, `status`, `locale`, `group`, `key`, `value
 (1105, 1, 'phrase', '_json', 'category_block_style', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1106, 1, 'phrase', '_json', 'add_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1107, 1, 'phrase', '_json', 'update_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
+(1108, 1, 'phrase', '_json', 'add_sub_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1109, 1, 'phrase', '_json', 'parent_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
+(1110, 1, 'phrase', '_json', 'sub_category_name', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
+(1111, 1, 'phrase', '_json', 'update_sub_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
+(1112, 1, 'phrase', '_json', 'sub_categories', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1113, 1, 'phrase', '_json', 'categories', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1114, 1, 'phrase', '_json', 'select_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
+(1115, 1, 'phrase', '_json', 'select_sub_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1116, 1, 'phrase', '_json', 'add_post', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1117, 1, 'phrase', '_json', 'posts_details', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1118, 1, 'phrase', '_json', 'content', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
@@ -1788,6 +1804,7 @@ INSERT INTO `ltm_translations` (`id`, `status`, `locale`, `group`, `key`, `value
 (1125, 1, 'phrase', '_json', 'show_only_to_authenticate_users', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1126, 1, 'phrase', '_json', 'seo_details', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1127, 1, 'phrase', '_json', 'tags', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
+(1128, 1, 'phrase', '_json', 'sub_category', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1129, 1, 'phrase', '_json', 'send_post_to_newsletter', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1130, 1, 'phrase', '_json', 'send_notification_subscribers', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
 (1131, 1, 'phrase', '_json', 'publish', '', '2022-10-22 18:29:29', '2022-10-22 18:29:29'),
@@ -2332,6 +2349,7 @@ CREATE TABLE `menu_item` (
   `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `page_id` bigint(20) UNSIGNED DEFAULT NULL,
   `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `sub_category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `post_id` bigint(20) UNSIGNED DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `new_teb` tinyint(1) NOT NULL DEFAULT 0,
@@ -2343,12 +2361,19 @@ CREATE TABLE `menu_item` (
 -- Dumping data for table `menu_item`
 --
 
-INSERT INTO `menu_item` (`id`, `label`, `language`, `menu_id`, `is_mega_menu`, `order`, `parent`, `source`, `url`, `page_id`, `category_id`,  `post_id`, `status`, `new_teb`, `created_at`, `updated_at`) VALUES
-(1, 'Home', 'en', 1, 'no', 1, NULL, 'custom', '#', NULL, NULL,  NULL, 1, 0, '2020-10-14 05:26:41', '2020-12-18 21:45:20'),
-(2, 'Default', 'en', 1, 'tab', 2, NULL, 'custom', '', NULL, NULL,  NULL, 1, 0, '2020-10-14 05:33:29', '2020-12-18 21:45:20'),
-(3, 'Contact Us', 'en', 1, 'no', 11, 32, 'page', NULL, 1, NULL,  NULL, 1, 0, '2020-10-14 05:34:07', '2020-12-19 04:35:31'),
-(4, 'About us', 'en', 1, 'no', 12, 32, 'page', NULL, 2, NULL,  NULL, 1, 0, '2020-10-14 05:42:29', '2020-12-18 21:45:40'),
-(5, 'Pages', 'en', 1, 'no', 10, NULL, 'custom', '#', NULL, NULL,  NULL, 1, 0, '2020-12-18 21:05:24', '2020-12-19 04:35:31');
+INSERT INTO `menu_item` (`id`, `label`, `language`, `menu_id`, `is_mega_menu`, `order`, `parent`, `source`, `url`, `page_id`, `category_id`, `sub_category_id`, `post_id`, `status`, `new_teb`, `created_at`, `updated_at`) VALUES
+(1, 'Home', 'en', 1, 'no', 1, NULL, 'custom', '#', NULL, NULL, NULL, NULL, 1, 0, '2020-10-14 05:26:41', '2020-12-18 21:45:20'),
+(2, 'Life Style', 'en', 1, 'tab', 2, NULL, 'custom', '', NULL, NULL, NULL, NULL, 1, 0, '2020-10-14 05:33:29', '2020-12-18 21:45:20'),
+(3, 'World', 'en', 1, 'no', 3, 2, 'category', NULL, NULL, 1, NULL, NULL, 1, 0, '2020-10-14 05:33:38', '2020-12-18 21:45:20'),
+(4, 'Science', 'en', 1, 'no', 4, 2, 'category', NULL, NULL, 2, NULL, NULL, 1, 0, '2020-10-14 05:33:38', '2020-12-18 21:45:20'),
+(6, 'Contact Us', 'en', 1, 'no', 11, 32, 'page', NULL, 1, NULL, NULL, NULL, 1, 0, '2020-10-14 05:34:07', '2020-12-19 04:35:31'),
+(7, 'About us', 'en', 1, 'no', 12, 32, 'page', NULL, 2, NULL, NULL, NULL, 1, 0, '2020-10-14 05:42:29', '2020-12-18 21:45:40'),
+(8, 'Pages', 'en', 1, 'no', 10, NULL, 'custom', '#', NULL, NULL, NULL, NULL, 1, 0, '2020-12-18 21:05:24', '2020-12-19 04:35:31'),
+(9, 'RSS News', 'en', 1, 'no', 5, NULL, 'category', NULL, NULL, 4, NULL, NULL, 1, 0, '2020-12-18 21:06:18', '2020-12-18 21:45:20'),
+(10, 'Nasa', 'en', 1, 'no', 6, 33, 'sub-category', NULL, NULL, NULL, 4, NULL, 1, 0, '2020-12-18 21:06:40', '2020-12-18 21:45:20'),
+(11, 'Wired', 'en', 1, 'no', 7, 33, 'sub-category', NULL, NULL, NULL, 5, NULL, 1, 0, '2020-12-18 21:06:40', '2020-12-18 21:45:20'),
+(12, 'ABC News', 'en', 1, 'no', 8, 33, 'sub-category', NULL, NULL, NULL, 6, NULL, 1, 0, '2020-12-18 21:06:40', '2020-12-18 21:45:20'),
+(13, 'gallery', 'en', 1, 'no', 9, NULL, 'page', NULL, NULL, NULL, NULL, NULL, 1, 0, '2020-12-18 21:37:06', '2020-12-19 04:35:31');
 
 -- --------------------------------------------------------
 
@@ -2397,6 +2422,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2019_08_19_000000_create_failed_jobs_table', 1),
 (7, '2019_09_28_121115_create_Permissions_table', 1),
 (8, '2019_10_02_101820_create_categories_table', 1),
+(9, '2019_10_02_130602_create_sub_categories_table', 1),
 (10, '2019_10_03_102624_create_posts_table', 1),
 (11, '2019_10_13_160721_create_settings_table', 1),
 (12, '2019_10_13_173518_create_languages_table', 1),
@@ -2531,6 +2557,9 @@ INSERT INTO `permissions` (`id`, `slug`, `name`, `description`, `created_at`, `u
 (37, 'category_read', 'category', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (38, 'category_write', 'category', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (39, 'category_delete', 'category', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(40, 'sub_category_read', 'sub_category', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(41, 'sub_category_write', 'sub_category', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(42, 'sub_category_delete', 'sub_category', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (43, 'widget_read', 'widget', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (44, 'widget_write', 'widget', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (45, 'widget_delete', 'widget', '', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
@@ -5236,7 +5265,8 @@ CREATE TABLE `posts` (
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `language` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(10) UNSIGNED DEFAULT NULL,
-
+  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `sub_category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `post_type` enum('article','video','audio','trivia-quiz','personality-quiz') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `submitted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 Non Submitted, 1 submitted',
   `image_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -5375,7 +5405,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `slug`, `name`, `permissions`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin', 'Administrator', '{\"users_read\":true,\"users_write\":true,\"users_delete\":true,\"settings_read\":true,\"settings_write\":true,\"settings_delete\":true,\"role_read\":true,\"role_write\":true,\"role_delete\":true,\"permission_read\":true,\"permission_write\":true,\"permission_delete\":true,\"language_settings_read\":true,\"language_settings_write\":true,\"language_settings_delete\":true,\"pages_read\":true,\"pages_write\":true,\"pages_delete\":true,\"menu_read\":true,\"menu_write\":true,\"menu_delete\":true,\"menu_item_read\":true,\"menu_item_write\":true,\"menu_item_delete\":true,\"post_read\":true,\"post_write\":true,\"post_delete\":true,\"category_read\":true,\"category_write\":true,\"category_delete\":true,\"sub_category_read\":true,\"sub_category_write\":true,\"sub_category_delete\":true,\"widget_read\":true,\"widget_write\":true,\"widget_delete\":true,\"newsletter_read\":true,\"newsletter_write\":true,\"newsletter_delete\":true,\"notification_read\":true,\"notification_write\":true,\"notification_delete\":true,\"contact_message_read\":true,\"contact_message_write\":true,\"contact_message_delete\":true,\"ads_read\":true,\"ads_write\":true,\"ads_delete\":true,\"theme_section_read\":true,\"theme_section_write\":true,\"theme_section_delete\":true,\"polls_read\":true,\"polls_write\":true,\"polls_delete\":true,\"socials_read\":true,\"socials_write\":true,\"socials_delete\":true,\"comments_read\":true,\"comments_write\":true,\"comments_delete\":true,\"album_read\":true,\"album_write\":true,\"album_delete\":true,\"rss_read\":true,\"rss_write\":true,\"rss_delete\":true,\"api_read\":true,\"api_write\":true,\"api_delete\":true}', '2021-09-04 22:34:38', '2021-09-04 22:34:38'),
+(1, 'superadmin', 'Superadmin', '{\"users_read\":true,\"users_write\":true,\"users_delete\":true,\"settings_read\":true,\"settings_write\":true,\"settings_delete\":true,\"role_read\":true,\"role_write\":true,\"role_delete\":true,\"permission_read\":true,\"permission_write\":true,\"permission_delete\":true,\"language_settings_read\":true,\"language_settings_write\":true,\"language_settings_delete\":true,\"pages_read\":true,\"pages_write\":true,\"pages_delete\":true,\"menu_read\":true,\"menu_write\":true,\"menu_delete\":true,\"menu_item_read\":true,\"menu_item_write\":true,\"menu_item_delete\":true,\"post_read\":true,\"post_write\":true,\"post_delete\":true,\"category_read\":true,\"category_write\":true,\"category_delete\":true,\"sub_category_read\":true,\"sub_category_write\":true,\"sub_category_delete\":true,\"widget_read\":true,\"widget_write\":true,\"widget_delete\":true,\"newsletter_read\":true,\"newsletter_write\":true,\"newsletter_delete\":true,\"notification_read\":true,\"notification_write\":true,\"notification_delete\":true,\"contact_message_read\":true,\"contact_message_write\":true,\"contact_message_delete\":true,\"ads_read\":true,\"ads_write\":true,\"ads_delete\":true,\"theme_section_read\":true,\"theme_section_write\":true,\"theme_section_delete\":true,\"polls_read\":true,\"polls_write\":true,\"polls_delete\":true,\"socials_read\":true,\"socials_write\":true,\"socials_delete\":true,\"comments_read\":true,\"comments_write\":true,\"comments_delete\":true,\"album_read\":true,\"album_write\":true,\"album_delete\":true,\"rss_read\":true,\"rss_write\":true,\"rss_delete\":true,\"api_read\":true,\"api_write\":true,\"api_delete\":true}', '2021-09-04 22:34:38', '2021-09-04 22:34:38'),
 (2, 'admin', 'Admin', '{\"users_read\":true,\"users_write\":true,\"settings_read\":true,\"settings_write\":true,\"role_read\":true,\"role_write\":true,\"permission_read\":true,\"permission_write\":true,\"language_settings_read\":true,\"language_settings_write\":true,\"pages_read\":true,\"pages_write\":true,\"menu_read\":true,\"menu_write\":true,\"menu_item_read\":true,\"menu_item_write\":true,\"post_read\":true,\"post_write\":true,\"category_read\":true,\"category_write\":true,\"sub_category_read\":true,\"sub_category_write\":true,\"widget_read\":true,\"widget_write\":true,\"newsletter_read\":true,\"newsletter_write\":true,\"notification_read\":true,\"notification_write\":true,\"contact_message_read\":true,\"contact_message_write\":true,\"ads_read\":true,\"ads_write\":true,\"theme_section_read\":true,\"theme_section_write\":true,\"polls_read\":true,\"polls_write\":true,\"socials_read\":true,\"socials_write\":true,\"comments_read\":true,\"comments_write\":true,\"album_read\":true,\"album_write\":true,\"rss_read\":true,\"rss_write\":true}', '2021-09-04 22:34:38', '2021-09-04 22:34:38'),
 (3, 'editor', 'Editor', '{\"pages_read\":true,\"pages_write\":true,\"menu_read\":true,\"menu_write\":true,\"menu_item_read\":true,\"menu_item_write\":true,\"post_read\":true,\"post_write\":true,\"category_read\":true,\"category_write\":true,\"sub_category_read\":true,\"sub_category_write\":true,\"widget_read\":true,\"widget_write\":true,\"newsletter_read\":true,\"newsletter_write\":true,\"notification_read\":true,\"notification_write\":true,\"contact_message_read\":true,\"contact_message_write\":true,\"ads_read\":true,\"ads_write\":true,\"polls_read\":true,\"polls_write\":true}', '2021-09-04 22:34:38', '2021-09-04 22:34:38'),
 (4, 'user', 'User', NULL, '2021-09-04 22:34:38', '2021-09-04 22:34:38'),
@@ -5565,14 +5595,14 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `title`, `value`, `lang`, `created_at`, `updated_at`) VALUES
-(1, 'facebook_client_id', '', 'en', NULL, '2022-10-22 18:29:21'),
-(2, 'facebook_client_secretkey', '', 'en', NULL, '2022-10-22 18:29:21'),
+(1, 'facebook_client_id', '813336819462746', 'en', NULL, '2022-10-22 18:29:21'),
+(2, 'facebook_client_secretkey', '1127148cc38028e49041f0398d62be5f', 'en', NULL, '2022-10-22 18:29:21'),
 (3, 'facebook_visibility', '1', 'en', NULL, '2022-10-22 18:29:21'),
-(4, 'facebook_callback_url', 'http://localhost/laravel/login/facebook/callback', 'en', NULL, '2022-10-22 18:29:21'),
+(4, 'facebook_callback_url', 'http://localhost/laravel/newsportal/login/facebook/callback', 'en', NULL, '2022-10-22 18:29:21'),
 (5, 'google_client_id', '933979913722-0ltkl07s2b30nrrna0spd4v6en5rmjqc.apps.googleusercontent.com', 'en', NULL, '2022-10-22 18:29:21'),
 (6, 'google_client_secretkey', 'KrsXKJSRFaj5rb5uZegkpsrE', 'en', NULL, '2022-10-22 18:29:21'),
 (7, 'google_visibility', '1', 'en', NULL, '2022-10-22 18:29:21'),
-(8, 'google_callback_url', 'https://localhost/laravel/login/google/callback', 'en', NULL, '2022-10-22 18:29:21'),
+(8, 'google_callback_url', 'https://demo.newsportal.lab/login/google/callback', 'en', NULL, '2022-10-22 18:29:21'),
 (9, 'preloader_option', '0', 'en', NULL, '2022-10-22 18:29:21'),
 (10, 'submit_news_status', '1', 'en', NULL, '2022-10-22 18:29:21'),
 (11, 'version', '131', 'en', NULL, '2022-10-22 18:29:21'),
@@ -5603,16 +5633,16 @@ INSERT INTO `settings` (`id`, `title`, `value`, `lang`, `created_at`, `updated_a
 (36, 'fan_interstitial_ads_placement_id', '', 'en', NULL, '2022-10-22 18:29:21'),
 (37, 'startapp_app_id', '', 'en', NULL, '2022-10-22 18:29:21'),
 (38, 'default_language', 'en', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(39, 'timezone', 'Asia/Kathmandu', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
+(39, 'timezone', 'Asia/Dhaka', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (40, 'application_name', 'ONNO', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (41, 'mail_driver', 'smtp', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (42, 'mail_host', 'smtp.gmail.com', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (43, 'sendmail_path', '/usr/bin/sendmail -bs', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (44, 'mail_port', '465', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(45, 'mail_address', 'newscms@gmail.com', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
+(45, 'mail_address', 'ovoocms@gmail.com', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (46, 'mail_name', 'ONNO News and Magazine', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(47, 'mail_username', 'newscms@gmail.com', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(48, 'mail_password', 'secure@2019', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
+(47, 'mail_username', 'ovoocms@gmail.com', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
+(48, 'mail_password', 'Bangla@2019', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (49, 'mail_encryption', 'ssl', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (50, 'default_storage', 'local', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (51, 'aws_access_key_id', 'AKIAVYWNX47HQQEHWEQO', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
@@ -5627,7 +5657,7 @@ INSERT INTO `settings` (`id`, `title`, `value`, `lang`, `created_at`, `updated_a
 (60, 'onesignal_accept_button', 'ALLOW', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (61, 'onesignal_cancel_button', 'NO THANKS', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (62, 'notification_status', '0', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(63, 'seo_title', 'Byterays News', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(63, 'seo_title', 'ONNO News and Magazine', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (64, 'seo_keywords', '', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (65, 'seo_meta_description', '', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (66, 'author_name', 'Byterays', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
@@ -5638,12 +5668,12 @@ INSERT INTO `settings` (`id`, `title`, `value`, `lang`, `created_at`, `updated_a
 (71, 'page_detail_prefix', 'page', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (72, 'article_detail_prefix', 'story', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (73, 'url', 'http://127.0.0.1:8000', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(74, 'address', 'kathmandu', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(75, 'email', 'info@byterays.in', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(76, 'phone', '01123456789', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(74, 'address', 'khilkhet', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(75, 'email', 'info@bytreays.com', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
+(76, 'phone', '01400620055', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (77, 'zip_code', '1207', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(78, 'city', 'Kathmandu', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(79, 'state', 'Bagmati', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(78, 'city', 'Dhaka', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(79, 'state', 'Dhaka', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (80, 'country', 'Country', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (81, 'website', 'byterays.com', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (82, 'company_registration', '123456789', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
@@ -5652,7 +5682,7 @@ INSERT INTO `settings` (`id`, `title`, `value`, `lang`, `created_at`, `updated_a
 (85, 'captcha_secret', '6LdttdYZAAAAAMSCPpKUW1rxlLjbkL6fyceDUGSm', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (86, 'captcha_sitekey', '6LdttdYZAAAAADzhva8gaxrwpyOGAgdlhm8VZbil', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (87, 'captcha_visibility', '', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(88, 'copyright_text', 'Copyright © 2022 News CMS - All Rights Reserved.', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(88, 'copyright_text', 'Copyright © 2020 ONNO News and Magazine - All Rights Reserved.', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (89, 'signature', 'Best Regards', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (90, 'addthis_public_id', 'PHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iLy9zNy5hZGR0aGlzLmNvbS9qcy8zMDAvYWRkdGhpc193aWRnZXQuanMjcHViaWQ9cmEtNWY4YmU4NGQ1NGQxZjRmYyI+PC9zY3JpcHQ+', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (91, 'addthis_toolbox', 'PGRpdiBjbGFzcz0iYWRkdGhpc19pbmxpbmVfc2hhcmVfdG9vbGJveCI+PC9kaXY+', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
@@ -5666,10 +5696,8 @@ INSERT INTO `settings` (`id`, `title`, `value`, `lang`, `created_at`, `updated_a
 (99, 'custom_header_style', NULL, 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (100, 'custom_footer_js', NULL, 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
 (101, 'ffmpeg_status', '1', 'en', '2021-09-04 22:34:39', '2022-10-22 18:29:21'),
-(102, 'application_name', 'NewsCMS', 'ar', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (111, 'tax_number', '123456789', 'en', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(115, 'onesignal_action_message', 'We\'d like to show you notifications for the latest updates.', 'ar', '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(124, 'status', NULL, 'en', '2021-09-29 12:18:29', '2022-10-22 18:29:21');
+(120, 'status', NULL, 'en', '2021-09-29 12:18:29', '2022-10-22 18:29:21');
 
 -- --------------------------------------------------------
 
@@ -5703,6 +5731,35 @@ INSERT INTO `social_media` (`id`, `name`, `url`, `icon_bg_color`, `text_bg_color
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `sub_categories`
+--
+
+CREATE TABLE `sub_categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sub_category_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `language` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sub_categories`
+--
+
+INSERT INTO `sub_categories` (`id`, `sub_category_name`, `slug`, `category_id`, `language`, `meta_description`, `meta_keywords`, `created_at`, `updated_at`) VALUES
+(1, 'Bangladesh', 'politics', 1, 'en', NULL, NULL, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(2, 'Computer Science', 'computer-science', 2, 'en', NULL, NULL, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(3, 'Life Style', 'life-style', 3, 'en', NULL, NULL, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(4, 'Nasa', 'nasa', 4, 'en', NULL, NULL, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(5, 'Wired', 'wired', 4, 'en', NULL, NULL, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(6, 'ABC News', 'abc-news', 4, 'en', NULL, NULL, '2021-09-04 22:34:39', '2021-09-04 22:34:39');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `tags`
@@ -5729,7 +5786,7 @@ INSERT INTO `tags` (`id`, `title`, `total_hit`, `status`, `created_at`, `updated
 (5, 'Business', 10, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (6, 'Technology', 10, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (7, 'Science', 10, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
-(8, 'Nepal', 2, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
+(8, 'Bangladesh', 2, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (9, 'World Cup', 10, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (10, 'Politics', 6, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
 (11, 'Computer', 2, 1, '2021-09-04 22:34:39', '2021-09-04 22:34:39'),
@@ -5797,7 +5854,11 @@ CREATE TABLE `theme_sections` (
 
 INSERT INTO `theme_sections` (`id`, `theme_id`, `type`, `label`, `order`, `category_id`, `ad_id`, `post_amount`, `section_style`, `is_primary`, `status`, `language`, `created_at`, `updated_at`) VALUES
 (1, 1, 0, 'Primary Section', 1, NULL, NULL, 1, 'style_1', 1, 1, NULL, '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
-(2, 1, 1, 'Default', 1, 1, NULL, NULL, 'style_1', 0, 1, 'en', '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
+(2, 1, 1, 'World', 1, 1, NULL, NULL, 'style_1', 0, 1, 'en', '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
+(3, 1, 1, 'Science', 2, 2, 1, NULL, 'style_2', 0, 1, 'en', '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
+(4, 1, 1, 'RSS News', 3, 4, 1, NULL, 'style_3', 0, 1, 'en', '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
+(5, 1, 1, 'Life Style', 4, 3, 1, NULL, 'style_4', 0, 1, 'en', '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
+(6, 1, 2, 'videos', 5, NULL, NULL, NULL, 'style_1', 0, 1, NULL, '2021-09-04 22:34:40', '2021-09-04 22:34:40'),
 (7, 1, 3, 'latest_post', 6, NULL, NULL, NULL, NULL, 0, 1, NULL, '2021-09-04 22:34:40', '2021-09-04 22:34:40');
 
 -- --------------------------------------------------------
@@ -6116,7 +6177,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `phone`, `dob`, `gender`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `profile_image`, `image_id`, `newsletter_enable`, `is_user_banned`, `is_password_set`, `user_banned_reason`, `is_subscribe_banned`, `subscribe_banned_reason`, `about_us`, `social_media`, `is_active`, `deactivate_reason`, `firebase_auth_id`, `created_at`, `updated_at`) VALUES
-(1, 'admin@newsportal.com', '01 123456789', '', 1, '$2y$10$mWgM1sGexmvh42LL8X1TROeCg2svfLkNHcLnQpsoYxo7uSE4GB3fG', '{\"email_show\":\"0\",\"author_show\":\"0\"}', '2022-10-22 18:29:05', 'Admin', 'User', NULL, NULL, 1, 1, 0, NULL, 1, NULL, NULL, '', 1, NULL, NULL, '2021-09-04 22:34:39', '2022-10-22 18:29:05');
+(1, 'admin@newsportal.lab', '', '', 1, '$2y$10$mWgM1sGexmvh42LL8X1TROeCg2svfLkNHcLnQpsoYxo7uSE4GB3fG', '{\"email_show\":\"0\",\"author_show\":\"0\"}', '2022-10-22 18:29:05', 'Admin', 'User', NULL, NULL, 1, 1, 0, NULL, 1, NULL, NULL, '', 1, NULL, NULL, '2021-09-04 22:34:39', '2022-10-22 18:29:05');
 -- --------------------------------------------------------
 
 --
@@ -6159,6 +6220,19 @@ CREATE TABLE `visitor_trackers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `visitor_trackers`
+--
+
+INSERT INTO `visitor_trackers` (`id`, `page_type`, `slug`, `url`, `source_url`, `ip`, `agent_browser`, `date`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, 'https://currentnews.com.bd/en', 'https://currentnews.com.bd/en/login', '220.247.128.165', 'Google Chrome', NULL, '2022-10-22 18:28:55', '2022-10-22 18:28:55'),
+(2, 1, NULL, 'https://currentnews.com.bd/en', 'https://currentnews.com.bd/en/login', '220.247.128.165', 'Google Chrome', NULL, '2022-10-22 18:29:06', '2022-10-22 18:29:06'),
+(3, 1, NULL, 'http://www.currentnews.com.bd', 'http://www.currentnews.com.bd', '185.191.171.21', '', NULL, '2022-10-22 18:29:19', '2022-10-22 18:29:19'),
+(4, 6, NULL, 'https://www.currentnews.com.bd/sub-category/abc-news', 'https://www.currentnews.com.bd', '66.249.79.83', 'Google Chrome', NULL, '2022-10-22 18:29:26', '2022-10-22 18:29:26'),
+(5, 1, NULL, 'http://www.currentnews.com.bd', 'http://www.currentnews.com.bd', '185.191.171.20', '', NULL, '2022-10-22 18:29:45', '2022-10-22 18:29:45'),
+(6, 1, NULL, 'http://www.currentnews.com.bd', 'http://www.currentnews.com.bd', '185.191.171.10', '', NULL, '2022-10-22 18:30:07', '2022-10-22 18:30:07'),
+(7, 1, NULL, 'http://www.currentnews.com.bd', 'http://www.currentnews.com.bd', '185.191.171.16', '', NULL, '2022-10-22 18:30:09', '2022-10-22 18:30:09'),
+(8, 1, NULL, 'https://currentnews.com.bd', 'https://currentnews.com.bd/en/login', '220.247.128.165', 'Google Chrome', NULL, '2022-10-22 18:30:18', '2022-10-22 18:30:18');
 
 -- --------------------------------------------------------
 
@@ -6519,6 +6593,14 @@ ALTER TABLE `social_media`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sub_categories`
+--
+ALTER TABLE `sub_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `sub_categories_slug_unique` (`slug`),
+  ADD KEY `sub_categories_category_id_foreign` (`category_id`);
+
+--
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
@@ -6827,6 +6909,11 @@ ALTER TABLE `settings`
 ALTER TABLE `social_media`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
+--
+-- AUTO_INCREMENT for table `sub_categories`
+--
+ALTER TABLE `sub_categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tags`
@@ -6932,7 +7019,8 @@ ALTER TABLE `menu_item`
   ADD CONSTRAINT `menu_item_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `menu_item_page_id_foreign` FOREIGN KEY (`page_id`) REFERENCES `pages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `menu_item_parent_foreign` FOREIGN KEY (`parent`) REFERENCES `menu_item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `menu_item_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `menu_item_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `menu_item_sub_category_id_foreign` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `menu_locations`
@@ -6970,6 +7058,7 @@ ALTER TABLE `poll_results`
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `posts_sub_category_id_foreign` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_video_id_foreign` FOREIGN KEY (`video_id`) REFERENCES `videos` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_video_thumbnail_id_foreign` FOREIGN KEY (`video_thumbnail_id`) REFERENCES `images` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -7018,8 +7107,14 @@ ALTER TABLE `role_users`
 -- Constraints for table `rss_feeds`
 --
 ALTER TABLE `rss_feeds`
-  ADD CONSTRAINT `rss_feeds_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `rss_feeds_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `rss_feeds_sub_category_id_foreign` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
+--
+-- Constraints for table `sub_categories`
+--
+ALTER TABLE `sub_categories`
+  ADD CONSTRAINT `sub_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `theme_sections`
