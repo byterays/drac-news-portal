@@ -80,7 +80,22 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        
+
+                                        <div class="item-table-filter">
+                                            <div class="form-group">
+                                                <p class="text-muted"><small>{{ __('sub_category') }}</small></p>
+                                                <select class="form-control dynamic" id="sub_category_id"
+                                                        name="sub_category_id">
+                                                    <option value="">{{ __('all') }}</option>
+                                                    @foreach ($subCategories as $subCategory)
+                                                        <option
+                                                            @if($search_query->sub_category_id == $subCategory->id) selected
+                                                            @endif value="{{ $subCategory->id }}">{{ $subCategory->sub_category_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="item-table-filter">
                                             <p class="text-muted"><small>Search</small></p>
                                             <input name="search_key" value="{{ $search_query->search_key }}"

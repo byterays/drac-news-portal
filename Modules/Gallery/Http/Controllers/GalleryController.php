@@ -48,7 +48,7 @@ class GalleryController extends Controller
     public function imageUpload(Request $request){
         if ($request->file('image')) :
             $validation = Validator::make($request->all(), [
-                'image' => 'required|mimes:gif,jpg,JPG,JPEG,jpeg,png|max:51200',
+                'image' => 'required|mimes:gif,jpg,JPG,JPEG,jpeg,png|max:5120',
             ])->validate();
 
             $image                  = new galleryImage();
@@ -100,7 +100,7 @@ class GalleryController extends Controller
                 $imgOg = Image::make($requestImage)->fit(730, 400)->stream();
 
                 //jpg. jpeg, JPEG, JPG compression
-                if ($fileType == 'jpeg' || $fileType == 'jpg' || $fileType == 'JPEG' || $fileType == 'JPG'):
+                if ($fileType == 'jpeg' or $fileType == 'jpg' or $fileType == 'JPEG' or $fileType == 'JPG'):
                     $imgOriginal    = Image::make(imagecreatefromjpeg($requestImage))->encode('webp', 80);
                     $imgThumbnail   = Image::make(imagecreatefromjpeg($requestImage))->fit(100, 100)->encode('webp', 80);
                     $imgBig         = Image::make(imagecreatefromjpeg($requestImage))->fit(1080, 1000)->encode('webp', 80);
@@ -111,7 +111,7 @@ class GalleryController extends Controller
                     $imgSmall       = Image::make(imagecreatefromjpeg($requestImage))->fit(123, 83)->encode('webp', 80);
 
                 //png compression
-                elseif ($fileType == 'PNG' || $fileType == 'png'):
+                elseif ($fileType == 'PNG' or $fileType == 'png'):
 
                     $imgOriginal    = Image::make(imagecreatefrompng($requestImage))->encode('webp', 80);
                     $imgThumbnail   = Image::make(imagecreatefrompng($requestImage))->fit(100, 100)->encode('webp', 80);
@@ -122,7 +122,7 @@ class GalleryController extends Controller
                     $imgMediumThree = Image::make(imagecreatefrompng($requestImage))->fit(255, 175)->encode('webp', 80);
                     $imgSmall       = Image::make(imagecreatefrompng($requestImage))->fit(123, 83)->encode('webp', 80);
                 
-                elseif ($fileType == 'GIF' || $fileType == 'gif'):
+                elseif ($fileType == 'GIF' or $fileType == 'gif'):
 
                     $imgOriginal    = Image::make(imagecreatefromgif($requestImage))->encode('gif', 80);
                     $imgThumbnail   = Image::make(imagecreatefromgif($requestImage))->fit(100, 100)->encode('gif', 80);
@@ -159,7 +159,7 @@ class GalleryController extends Controller
                 Image::make($requestImage)->save($ogImageUrl);
 
                 //jpg. jpeg, JPEG, JPG compression
-                if ($fileType == 'jpeg' || $fileType == 'jpg' || $fileType == 'JPEG' || $fileType == 'JPG'):
+                if ($fileType == 'jpeg' or $fileType == 'jpg' or $fileType == 'JPEG' or $fileType == 'JPG'):
                     Image::make(imagecreatefromjpeg($requestImage))->save($originalImageUrl, 80);
 
                     Image::make(imagecreatefromjpeg($requestImage))->fit(150, 150)->save($thumbnailImageUrl, 80);
@@ -171,7 +171,7 @@ class GalleryController extends Controller
                     Image::make(imagecreatefromjpeg($requestImage))->fit(123, 83)->save($smallImageUrl, 80);
 
                 //PNG, png compression
-                elseif ($fileType == 'PNG' || $fileType == 'png'):
+                elseif ($fileType == 'PNG' or $fileType == 'png'):
                     Image::make(imagecreatefrompng($requestImage))->save($originalImageUrl, 80);
 
                     Image::make(imagecreatefrompng($requestImage))->fit(150, 150)->save($thumbnailImageUrl, 80);
@@ -184,7 +184,7 @@ class GalleryController extends Controller
                 
 
                 //PNG, png compression
-                elseif ($fileType == 'GIF' || $fileType == 'gif'):
+                elseif ($fileType == 'GIF' or $fileType == 'gif'):
                     Image::make(imagecreatefromgif($requestImage))->save($originalImageUrl, 80);
 
                     Image::make(imagecreatefromgif($requestImage))->fit(150, 150)->save($thumbnailImageUrl, 80);
@@ -210,11 +210,6 @@ class GalleryController extends Controller
 
             $image->disk                = settingHelper('default_storage');
 
-            if($fileType=="GIF" || $fileType=="gif"){
-                move_uploaded_file($_FILES["image"]["tmp_name"],"../".$directory  ."/" . $originalImageName);
-            }else{
-                //$image->save();
-            }
             $image->save();
 
             $image                      = galleryImage::latest()->first();

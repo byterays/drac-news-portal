@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="entry-content block">
                                     <a href="{{ route('article.detail', ['id' => $post->slug]) }}">
-                                        <p>{!! \Illuminate\Support\Str::limit($post->title,200) !!}</p></a>
+                                        <p>{!! \Illuminate\Support\Str::limit($post->title, 40) !!}</p></a>
                                     <div class="entry-meta">
                                         <ul class="global-list">
                                             <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>

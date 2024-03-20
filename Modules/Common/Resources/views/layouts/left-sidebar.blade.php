@@ -106,8 +106,17 @@
                                 </ul>
                             </div>
                         </li>
-                    @endif  
+                    @endif
+                   
+
                   
+                    @if(Sentinel::getUser()->hasAccess(['polls_read']) || Sentinel::getUser()->hasAccess(['polls_write']) || Sentinel::getUser()->hasAccess(['polls_delete']))
+                        <li class="nav-item">
+                            <a class="nav-link @yield('poll')" href="{{route('polls')}}">
+                                <i class="mdi mdi-poll"></i>{{__('polls')}}
+                            </a>
+                        </li>
+                    @endif
                     @if(Sentinel::getUser()->hasAccess(['ads_read']) || Sentinel::getUser()->hasAccess(['ads_write']) || Sentinel::getUser()->hasAccess(['ads_delete']))
                         <li class="nav-item">
                             <a class="nav-link @yield('ads')" href="{{ route('ads') }}">
@@ -332,19 +341,76 @@
                                             {{ __('email_template') }}
                                         </a>
                                     </li>
-                                   
+
+                                    <li class="nav-item ">
+                                        <a class="nav-link @yield('setting-social-login')" href="{{ route('setting-social-login') }}">
+                                            {{__('social_login_settings')}}
+                                        </a>
+                                    </li>
                                     <li class="nav-item ">
                                         <a class="nav-link @yield('cache-route-config')" href="{{ route('cache') }}">
                                             {{__('cache')}}
                                         </a>
                                     </li>
-                                    
+                                    <li class="nav-item ">
+                                        <a class="nav-link @yield('update-database')" href="{{ route('update-database') }}">
+                                            {{__('update')}}
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </div>
                         </li>
                     @endif
 
+                    @if(Sentinel::getUser()->hasAccess(['api_read']) || Sentinel::getUser()->hasAccess(['api_write'])|| Sentinel::getUser()->hasAccess(['api_delete']))
+                        <li class="nav-item">
+                        <a class="nav-link @yield('api_active')" href="#" data-toggle="collapse" @yield('api', 'aria-expanded=false') data-target="#submenu-112" aria-controls="submenu-112">
+                            <i class="fas fa-fw fa-mobile"></i>{{__('mobile_app')}}
+                        </a>
+                        <div id="submenu-112" class="collapse submenu @yield('api-show')">
+                            <ul class="nav flex-column">
+                                <li class="nav-item ">
+                                    <a class="nav-link @yield('api-settings')" href="{{ route('api-settings') }}">
+                                        {{__('api_settings')}}
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link @yield('android-settings')" href="{{ route('android-settings') }}">
+                                        {{__('android_settings')}}
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link @yield('ios-settings')" href="{{ route('ios-settings') }}">
+                                        {{__('ios_settings')}}
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link @yield('app-config')" href="{{ route('app-config') }}">
+                                        {{__('app_config')}}
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link @yield('ads-config')" href="{{ route('ads-config') }}">
+                                        {{__('ads_config')}}
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link @yield('app-intro')" href="{{ route('app-intro') }}">
+                                        {{__('app_intro')}}
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    @endif
+                   
                     
 
                 </ul>

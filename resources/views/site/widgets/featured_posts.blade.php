@@ -1,5 +1,9 @@
 @php
+
+   
     $firstPost = $content->first();
+    
+  
     
 @endphp
 @if (!blank($content))
@@ -10,10 +14,9 @@
             @include('site.partials.home.category.first_post')
             <div class="entry-content absolute">
                 <div class="category">
-                    <ul class="global-list">                       
+                    <ul class="global-list">
                         @foreach($firstPost->categories as $category)
-                            <li> 
-                                              
+                            <li>                                
                                 <a href="{{ url('category',$category->slug) }}">{{ data_get($category, 'category_name') }}</a>                            
                             </li>
                         @endforeach
@@ -40,7 +43,7 @@
                             <div class="entry-content">
                                 <a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{{ \Illuminate\Support\Str::limit(data_get($post, 'title'), 25) }}</p></a>
                                 <div class="entry-meta">
-                                    <ul class="global-list">                                        
+                                    <ul class="global-list">
                                         <li class="d-sm-none d-md-none d-lg-block"><a href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
                                         <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                     </ul>

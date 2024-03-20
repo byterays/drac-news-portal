@@ -28,7 +28,7 @@ class ThemeSection extends Model
         return $this->belongsTo('Modules\Ads\Entities\Ad');
     }
 
-    public function posts()
+     public function posts()
     {
        return $this->hasManyThrough('Modules\Post\Entities\Post','Modules\Post\Entities\CategoryPost','category_id','id','category_id', 'post_id')->with('categories','image', 'user')->orderBy('id', 'desc');
     }

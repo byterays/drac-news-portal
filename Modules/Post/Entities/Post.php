@@ -22,6 +22,10 @@ class Post extends Model implements Feedable
         return $this->belongsTo('Modules\Gallery\Entities\Video', 'video_id','id');
     }
 
+     public function category(){
+        return $this->belongsToMany('Modules\Post\Entities\Category','category_post');
+    }    
+
     public function categories()
     {
             //return $this->belongsToMany(RelatedModel, pivot_table_name, foreign_key_of_current_model_in_pivot_table, foreign_key_of_other_model_in_pivot_table);
@@ -31,7 +35,7 @@ class Post extends Model implements Feedable
                     'post_id',
                     'category_id');
     }
-   
+    
     public function user(){
         return $this->belongsTo('Modules\User\Entities\User');
     }
@@ -76,7 +80,7 @@ class Post extends Model implements Feedable
 
     public static function getFeedItems()
     {
-        return Post::with(['categories','image'])
+        return Post::with(['category','image'])
             ->where('visibility', 1)
             ->where('status',1)
             ->whereNotNull('image_id')

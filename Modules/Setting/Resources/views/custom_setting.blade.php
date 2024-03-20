@@ -72,7 +72,8 @@
                                            href="{{ route('cron-information') }}">{{ __('cron_information') }}</a>
                                         <a class="nav-item nav-link" id="preference-control"
                                            href="{{ route('preferene-control') }}">{{ __('preference_setting') }}</a>
-                                       
+                                        <a class="nav-item nav-link" id="setting-social-login"
+                                           href="{{ route('setting-social-login') }}">{{ __('social_login_settings') }}</a>
                                         <a class="nav-item nav-link" id="setting-config-cache"
                                            href="{{ route('cache') }}">{{ __('cache') }}</a>
                                         

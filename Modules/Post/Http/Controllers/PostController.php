@@ -29,8 +29,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $categories     = Category::with('childrenRecursive')->where('parent_id', 0)->get();
-      
+        $categories     = Category::with('childrenRecursive')->where('parent_id', NULL)->get();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $posts          = Post::orderBy('id','desc')->with('image','video','categories','user')->paginate('15');
 
@@ -39,11 +38,9 @@ class PostController extends Controller
 
     public function createArticle()
     {
-        
-        $categories     = Category::with('childrenRecursive')->where('parent_id', 0)->orWhereNull('parent_id')->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
+        //$categories     = Category::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
+        $categories     = Category::with('childrenRecursive')->where('parent_id', NULL)->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
       
-        // var_dump($categories);
-        // exit;
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $countImage     = galleryImage::count();
         $countVideo     = Video::count();
@@ -250,8 +247,7 @@ class PostController extends Controller
     public function editPost($type,$id){
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $post           = Post::where('id',$id)->with(['image','video','videoThumbnail'])->first();        
-        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->orWhereNull('parent_id')->where('language',$post->language)->get();
-       
+        $categories       = Category::with('childrenRecursive')->where('parent_id', NULL)->where('language',$post->language)->get();
         $ads            = Ad::orderBy('id', 'desc')->get();
 
 
